@@ -1,21 +1,17 @@
 package com.inn.cafe.serviceImpl;
 
-import com.google.common.base.Strings;
-import com.google.gson.JsonArray;
-import com.inn.cafe.JWT.CustomerUserDetailsService;
-import com.inn.cafe.JWT.JwtFilter;
-import com.inn.cafe.POJO.Bill;
-import com.inn.cafe.POJO.Category;
-import com.inn.cafe.constents.CafeConstants;
-import com.inn.cafe.dao.BillDao;
-import com.inn.cafe.service.BillService;
-import com.inn.cafe.utils.CafeUtils;
-import com.inn.cafe.utils.EmailUtil;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import lombok.extern.slf4j.Slf4j;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import org.apache.pdfbox.io.IOUtils;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +20,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
+import com.inn.cafe.JWT.CustomerUserDetailsService;
+import com.inn.cafe.JWT.JwtFilter;
+import com.inn.cafe.POJO.Bill;
+import com.inn.cafe.constents.CafeConstants;
+import com.inn.cafe.dao.BillDao;
+import com.inn.cafe.service.BillService;
+import com.inn.cafe.utils.CafeUtils;
+import com.inn.cafe.utils.EmailUtil;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -52,7 +64,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public ResponseEntity<String> generateReport(Map<String, Object> requestMap) {
-        log.info("Insert generateReport");
+//        log.info("Insert generateReport");
         try {
             String filename;
             if (validateResquestMap(requestMap)) {
@@ -121,7 +133,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public ResponseEntity<byte[]> getPdf(Map<String, Object> requestMap) {
-        log.info("Inside getPdf : requestMap {}", requestMap);
+//        log.info("Inside getPdf : requestMap {}", requestMap);
         try {
             byte[] byteArray = new byte[0];
             if (!requestMap.containsKey("uuid") && validateResquestMap(requestMap)) {
@@ -149,9 +161,9 @@ public class BillServiceImpl implements BillService {
     public ResponseEntity<String> delete(Integer id) {
         try {
             if (jwtFilter.isAdmin()) {
-                Optional optional = billDao.findById(id);
+//                Optional optional = billDao.findById(id);
                 if (optional.isPresent()) {
-                    billDao.deleteById(id);
+//                    billDao.deleteById(id);
                     //System.out.println("Product is deleted successfully");
                     return CafeUtils.getResponeEntity("Bill is deleted successfully", HttpStatus.OK);
                 }
@@ -193,7 +205,7 @@ public class BillServiceImpl implements BillService {
     }
 
     private void setRectaangleInPdf(Document document) throws DocumentException {
-        log.info("Inside setRectaangleInPdf.");
+//        log.info("Inside setRectaangleInPdf.");
         Rectangle rectangle = new Rectangle(577, 825, 18, 15);
         rectangle.enableBorderSide(1);
         rectangle.enableBorderSide(2);
@@ -205,7 +217,7 @@ public class BillServiceImpl implements BillService {
     }
 
     private Font getFont(String type) {
-        log.info("Inside getFont");
+//        log.info("Inside getFont");
         switch (type) {
             case "Header":
                 Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLDOBLIQUE, 18, BaseColor.BLACK);
@@ -221,7 +233,7 @@ public class BillServiceImpl implements BillService {
     }
 
     private void addTableHeader(PdfPTable table) {
-        log.info("Inside addTableHeader");
+//        log.info("Inside addTableHeader");
         Stream.of("Name", "Category", "Quantity", "Price", "Sub Total")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();
@@ -236,7 +248,7 @@ public class BillServiceImpl implements BillService {
     }
 
     private void addRows(PdfPTable table, Map<String, Object> data) {
-        log.info("Inside addRows");
+//        log.info("Inside addRows");
         table.addCell((String) data.get("name"));
         table.addCell((String) data.get("category"));
         table.addCell((String) data.get("quantity"));

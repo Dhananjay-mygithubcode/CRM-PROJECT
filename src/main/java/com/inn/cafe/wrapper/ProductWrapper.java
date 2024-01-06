@@ -13,6 +13,10 @@ public class ProductWrapper {
     String status;
     Integer categoryId;
     String categoryName;
+    
+    public ProductWrapper() {
+		// TODO Auto-generated constructor stub
+	}
 
     public ProductWrapper(Integer id, String name , String description , Integer price , Integer categoryId , String categoryName , String status ) {
         this.id = id;

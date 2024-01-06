@@ -1,25 +1,27 @@
 package com.inn.cafe.serviceImpl;
 
-import com.google.common.base.Strings;
-import com.inn.cafe.JWT.CustomerUserDetailsService;
-import com.inn.cafe.JWT.JwtFilter;
-import com.inn.cafe.JWT.jwtUtil;
-import com.inn.cafe.POJO.Category;
-import com.inn.cafe.POJO.User;
-import com.inn.cafe.constents.CafeConstants;
-import com.inn.cafe.dao.CategoryDao;
-import com.inn.cafe.dao.UserDao;
-import com.inn.cafe.service.CategoryService;
-import com.inn.cafe.utils.CafeUtils;
-import com.inn.cafe.utils.EmailUtil;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import com.google.common.base.Strings;
+import com.inn.cafe.JWT.CustomerUserDetailsService;
+import com.inn.cafe.JWT.JwtFilter;
+import com.inn.cafe.POJO.Category;
+import com.inn.cafe.constents.CafeConstants;
+import com.inn.cafe.dao.CategoryDao;
+import com.inn.cafe.service.CategoryService;
+import com.inn.cafe.utils.CafeUtils;
+import com.inn.cafe.utils.EmailUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -42,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     EmailUtil emailUtil;
     @Override
     public ResponseEntity<String> addNewCategory(Map<String, String> requestMap) {
-        log.info("Inside addNewCategory{}", requestMap);
+//        log.info("Inside addNewCategory{}", requestMap);
         try {
             if(jwtFilter.isAdmin()){
                 if(validateCategoryMap(requestMap, false)){

@@ -40,7 +40,7 @@ public class CafeUtils {
     }
 
     public static Boolean isFileExist(String path){
-        log.info("Inside isFileExist {}" , path);
+//        log.info("Inside isFileExist {}" , path);
         try {
             File file = new File(path);
             return (file != null && file.exists()) ? Boolean.TRUE : Boolean.FALSE;
